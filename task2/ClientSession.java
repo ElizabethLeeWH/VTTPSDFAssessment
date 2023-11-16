@@ -7,10 +7,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientSession {
 
@@ -77,7 +76,9 @@ public class ClientSession {
             }
 
             myProducts = separate(allElements, 4);
-            Products p = new Products();
+
+            // System.out.println(allElements.stream().collect(Collectors.groupingBy(allElements.indexOf(s) > 4)).values(););
+            // allElements.stream().collect(Collectors.groupingBy(allElements.indexOf(s) > 4)).values();
             // myProducts.sort(Comparator.comparing(Products::getRating).thenComparing(Products::getPrice));
 
             
@@ -85,14 +86,6 @@ public class ClientSession {
 
             
         }
-    }
-
-    public List<List<String>> getMyProducts() {
-        return myProducts;
-    }
-
-    public void setMyProducts(List<List<String>> myProducts) {
-        this.myProducts = myProducts;
     }
 
     static <T> List<List<T>> separate(List<T> path, final int size) {
