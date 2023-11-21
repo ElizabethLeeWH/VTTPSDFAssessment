@@ -7,34 +7,50 @@ public class SortedData {
     private String category;
     private String highestRatedApp;
     private String lowestRatedApp;
-    private float highestRating = -1;
-    private float lowestRating = 6;
-    private List<Float> allRatings = new LinkedList<>();
+    private Double highestRating = (double) -1;
+    private Double lowestRating = (double) 6;
+    private List<Double> allRatings = new LinkedList<>();
+    private Integer discard = 0;
+
+
+    public Integer getDiscard() {
+        return discard;
+    }
+
+    public void setDiscard(Integer discard) {
+        this.discard = discard;
+    }
 
     public SortedData(String category){
         this.category = category;
     }
 
     public void sorting(GooglePlayStoreData app){
-        allRatings.add(app.rating());
-        if (app.rating() < getLowestRating()) {
-            setLowestRating(app.rating());
-            setLowestRatedApp(app.name());
-        }
-        if (app.rating() > getHighestRating()) {
-            setHighestRating(app.rating());
-            setHighestRatedApp(app.name());
-        }
+        if(!app.rating().isNaN()){
+            allRatings.add(app.rating());
+
+            if (app.rating() < getLowestRating()) {
+                setLowestRating(app.rating());
+                setLowestRatedApp(app.name());
+            }
+
+            if (app.rating() > getHighestRating()) {
+                setHighestRating(app.rating());
+                setHighestRatedApp(app.name());
+            }
+        }                    
     }
 
-    public Float avgRating(){
-        return allRatings.stream().reduce(0f, (acc, v) -> acc + v) / allRatings.size();
+    public double avgRating(){
+        return allRatings.stream().reduce((double) 0, (acc, v) -> acc + v) / allRatings.size();
     }
 
-    // public void discarded(GooglePlayStoreData app){
-    //     Map<String, Integer> hm = new HashMap<String, Integer>();
-    //     hm.put(GooglePlayStoreData)
-    // }
+    public void discarded(GooglePlayStoreData app){
+        
+        if(app.rating().isNaN()) {
+            discard++;
+        }
+    }
 
     public String getCategory() {
         return category;
@@ -60,29 +76,27 @@ public class SortedData {
         this.lowestRatedApp = lowestRatedApp;
     }
 
-    public float getHighestRating() {
+    public Double getHighestRating() {
         return highestRating;
     }
 
-    public void setHighestRating(float highestRating) {
-        this.highestRating = highestRating;
+    public void setHighestRating(Double double1) {
+        this.highestRating = double1;
     }
 
-    public float getLowestRating() {
+    public Double getLowestRating() {
         return lowestRating;
     }
 
-    public void setLowestRating(float lowestRating) {
-        this.lowestRating = lowestRating;
+    public void setLowestRating(Double double1) {
+        this.lowestRating = double1;
     }
 
-    public List<Float> getAllRatings() {
+    public List<Double> getAllRatings() {
         return allRatings;
     }
 
-    public void setAllRatings(List<Float> allRatings) {
+    public void setAllRatings(List<Double> allRatings) {
         this.allRatings = allRatings;
-    }
-
-    
+    }    
 }
